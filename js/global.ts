@@ -173,6 +173,7 @@ export namespace Globals {
 
         difficulty: string;             // Difficulty of the actual song (Easy, Normal, Hard, Expert, Expert+)
         difficultyClass: string;        // Class Difficulty of the actual song (Easy, Normal, Hard, Expert, ExpertPlus)
+        characteristic: string;         // Difficulty characteristic (Standard, OneSaber, NoArrows, 360Degree)
 
         ranked: boolean;                // Song is ranked ?
         qualified: boolean;             // Song is qualified ?

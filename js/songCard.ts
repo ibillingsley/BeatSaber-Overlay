@@ -45,6 +45,7 @@ export class SongCard {
 
         difficulty: "Expert+",
         difficultyClass: "ExpertPlus",
+        characteristic: "Standard",
 
         ranked: false,
         qualified: false,
