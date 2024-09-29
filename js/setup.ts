@@ -249,7 +249,7 @@ export class Setup {
     }
 
     private async urlTextBuilder() {
-        let url = "https://overlay.hyldrazolxy.fr/";
+        let url = location.origin + location.pathname;
         let parameters = [];
         let firstParameter = true;
         let toggled = true;
