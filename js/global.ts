@@ -48,6 +48,7 @@ export namespace Globals {
             default: string[];
             freemium: string[];
             reselim: string[];
+            iza: string[];
         };
         setup: {
             [key: string]: string[];
@@ -70,7 +71,8 @@ export namespace Globals {
             default: ["./skins/songCard/default/", "index.html", "style.css"],
             freemium: ["./skins/songCard/freemium/", "index.html", "style.css"],
             reselim: ["./skins/songCard/reselim/", "index.html", "style.css"],
-            dietah: ["./skins/songCard/dietah/", "index.html", "style.css"]
+            dietah: ["./skins/songCard/dietah/", "index.html", "style.css"],
+            iza: ["./skins/songCard/iza/", "index.html", "style.css"]
         },
         setup: {
             default: ["./skins/setup/default/", "index.html", "general.html", "playerCard.html", "songCard.html", "style.css"]
