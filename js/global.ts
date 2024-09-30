@@ -80,7 +80,7 @@ export namespace Globals {
     ////////////////////////
     // UI GLOBAL VARIABLE //
     ////////////////////////
-    export const FPS_REFRESH = 1000 / 10;
+    export const FPS_REFRESH = 1000 / 4;
 
     ////////////////////////////////
     // SCORESABER GLOBAL VARIABLE //
