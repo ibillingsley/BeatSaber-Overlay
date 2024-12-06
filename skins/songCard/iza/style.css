@@ -2,7 +2,7 @@
 
 #songCard {
     position: absolute;
-    margin: 14px 16px;
+    padding: 14px 16px;
     font-family: "Montserrat", sans-serif;
     white-space: nowrap;
     color: white;
