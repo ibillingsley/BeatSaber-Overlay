@@ -181,14 +181,17 @@ export class SongCard {
         this.songCardData.totalTimeToLetters = this.timeToLetters(this.songCardData.totalTime);
         const data = await this._beatSaver.getSongInfo(this.songCardData.hashMap);
 
-        if (data.error !== undefined) {
+        if (!data.id) {
             this.songCardData.ranked = false;
             this.songCardData.qualified = false;
-            this.songCardData.bsrKey = "NotFound";
+            this.songCardData.bsrKey = this.songCardData.hashMap?.endsWith(" WIP") ? "WIP" :
+                (this.songCardData.hashMap?.length === 40 ? "???" : "OST");
             return;
         }
 
-        this.songCardData.cover = data.versions[0].coverURL;
+        if (data.versions?.[0].coverURL && !this.songCardData.cover?.startsWith("data:"))
+            this.songCardData.cover = data.versions[0].coverURL;
+
         this.songCardData.ranked = data.ranked;
         this.songCardData.qualified = (data.ranked) ? false : data.qualified;
         this.songCardData.bsrKey = data.id;

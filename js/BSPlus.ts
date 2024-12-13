@@ -78,7 +78,11 @@ export class BSPlus {
     }
 
     private mapInfoParser(dataEvent: Globals.I_bsPlusObject): void {
-        this._songCard.songCardData.cover = "data:image/png;base64," + dataEvent.mapInfoChanged.coverRaw;
+        if (dataEvent.mapInfoChanged.coverRaw)
+            this._songCard.songCardData.cover = "data:image/png;base64," + dataEvent.mapInfoChanged.coverRaw;
+        else
+            this._songCard.songCardData.cover = "./pictures/default/notFound.jpg";
+
         this._songCard.songCardData.title = dataEvent.mapInfoChanged.name;
         this._songCard.songCardData.subTitle = dataEvent.mapInfoChanged.sub_name;
         this._songCard.songCardData.mapper = dataEvent.mapInfoChanged.mapper;
