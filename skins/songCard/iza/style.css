@@ -6,6 +6,9 @@
     font-family: "Montserrat", sans-serif;
     white-space: nowrap;
     color: white;
+    opacity: 1;
+    transition-property: opacity;
+    transition-delay: 800ms;
 }
 
 #songCard.top-left,
@@ -19,7 +22,8 @@
 }
 
 #songCard.hidden {
-    display: none;
+    visibility: hidden;
+    opacity: 0;
 }
 
 #beatmap {
