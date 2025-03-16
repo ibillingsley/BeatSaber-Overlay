@@ -122,6 +122,11 @@ export namespace Globals {
 
         versions: [{
             coverURL: string;           // Song cover
+            diffs: {
+                characteristic: string; // Difficulty characteristic (Standard, OneSaber, NoArrows, 360Degree)
+                difficulty: string;     // Difficulty of the actual song (Easy, Normal, Hard, Expert, ExpertPlus)
+                label?: string;         // Custom difficulty label
+            }[];
         }];
     }
 

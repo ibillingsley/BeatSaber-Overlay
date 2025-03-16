@@ -86,10 +86,17 @@
     content: "]";
 }
 
+#info {
+    display: flex;
+}
+
 #difficulty,
 #characteristic {
     font-size: 14px;
     font-weight: 600;
+    max-width: 50ch;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 #characteristic {

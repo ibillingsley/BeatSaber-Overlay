@@ -195,6 +195,14 @@ export class SongCard {
         this.songCardData.ranked = data.ranked;
         this.songCardData.qualified = (data.ranked) ? false : data.qualified;
         this.songCardData.bsrKey = data.id;
+        this.songCardData.mapper = data.metadata.levelAuthorName; // Replace mapper name with full authors list
+        // Find difficulty label
+        for (const diff of data.versions?.[0]?.diffs || []) {
+            if (diff.characteristic === this.songCardData.characteristic && diff.difficulty === this.songCardData.difficultyClass) {
+                if (diff.label) this.songCardData.difficulty += ` [${diff.label}]`;
+                break;
+            }
+        }
     }
 
     /////////////////////
