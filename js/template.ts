@@ -45,7 +45,7 @@ export class Template {
                         case "topCountry":
                         case "topWorld":
                         case "performancePoint":
-                            $("#" + key).text(value);
+                            setText($("#" + key), value);
                             break;
 
                         case "playerFlag":
@@ -72,7 +72,7 @@ export class Template {
                         case "score":
                         case "combo":
                         case "miss":
-                            $("#" + key).text(value);
+                            setText($("#" + key), value);
                             break;
 
                         case "cover":
@@ -85,10 +85,12 @@ export class Template {
                             break;
 
                         case "accuracyToLetterClass":
-                            $("." + key).removeClass("ss s a b c de").addClass(value as string);
+                            $("." + key).removeClass(["ss", "s", "a", "b", "c", "de"].filter(c => c !== value))
+                                .addClass(value);
                             break;
                         case "difficultyClass":
-                            $("." + key).removeClass("ExpertPlus Expert Hard Normal Easy").addClass(value as string);
+                            $("." + key).removeClass(["ExpertPlus", "Expert", "Hard", "Normal", "Easy"].filter(c => c !== value))
+                                .addClass(value);
                             break;
 
                         case "health":
@@ -117,8 +119,8 @@ export class Template {
         if (moduleName === Globals.E_MODULES.SONGCARD)
             element = $("#songCard");
 
-        element.removeClass("top-left bottom-left top-right bottom-right");
-        element.addClass(position);
+        element.removeClass(["top-left", "bottom-left", "top-right", "bottom-right"].filter(c => c !== position))
+            .addClass(position);
     }
 
     public moduleToggleDisplay(playerCardData: Globals.I_playerCard, songCardData: Globals.I_songCard): void {
@@ -142,10 +144,7 @@ export class Template {
     }
 
     public stopOrStart(started: boolean, paused: boolean): void {
-        $("#songCard").removeClass("stop");
-
-        if (!started || paused)
-            $("#songCard").addClass("stop");
+        $("#songCard").toggleClass("stop", !started || paused);
     }
 
     public missDisplay(display: boolean): void {
@@ -166,12 +165,9 @@ export class Template {
 
     public missChanger(missNumber: number): void {
         if (missNumber === 0) {
-            $("#miss").removeClass("ion-android-checkmark-circle ion-android-cancel");
-            $("#miss").addClass("ion-android-checkmark-circle");
-            $("#miss").text("FC");
+            setText($("#miss").removeClass("ion-android-cancel").addClass("ion-android-checkmark-circle"), "FC");
         } else {
-            $("#miss").removeClass("ion-android-checkmark-circle ion-android-cancel");
-            $("#miss").addClass("ion-android-cancel");
+            $("#miss").removeClass("ion-android-checkmark-circle").addClass("ion-android-cancel");
         }
     }
 
@@ -198,4 +194,9 @@ export class Template {
         else
             $("#setup").addClass("hidden");
     }
+}
+
+function setText(target: JQuery, text: string) {
+    const element = target.get(0);
+    if (element) element.textContent = text;
 }
