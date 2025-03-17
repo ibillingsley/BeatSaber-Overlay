@@ -1,0 +1,4 @@
+[[redirects]]
+  from = "/scoreSaberProxy/*"
+  to = "https://scoresaber.com/api/:splat"
+  status = 200
