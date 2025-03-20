@@ -112,6 +112,7 @@ export class DataPuller {
 
         this._songCard.songCardData.difficulty = (dataEvent.Difficulty === "ExpertPlus") ? "Expert +" : dataEvent.Difficulty;
         this._songCard.songCardData.difficultyClass = dataEvent.Difficulty;
+        this._songCard.songCardData.difficultyLabel = dataEvent.CustomDifficultyLabel;
         this._songCard.songCardData.characteristic = dataEvent.MapType;
 
         this._songCard.songCardData.time = 0;

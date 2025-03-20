@@ -45,6 +45,7 @@ export class SongCard {
 
         difficulty: "Expert+",
         difficultyClass: "ExpertPlus",
+        difficultyLabel: "",
         characteristic: "Standard",
 
         ranked: false,
@@ -199,7 +200,7 @@ export class SongCard {
         // Find difficulty label
         for (const diff of data.versions?.[0]?.diffs || []) {
             if (diff.characteristic === this.songCardData.characteristic && diff.difficulty === this.songCardData.difficultyClass) {
-                if (diff.label) this.songCardData.difficulty += ` [${diff.label}]`;
+                if (diff.label) this.songCardData.difficultyLabel = diff.label;
                 break;
             }
         }

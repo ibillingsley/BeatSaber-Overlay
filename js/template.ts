@@ -62,6 +62,7 @@ export class Template {
                         case "mapper":
                         case "author":
                         case "difficulty":
+                        case "difficultyLabel":
                         case "characteristic":
                         case "bsrKey":
                         case "bpm":

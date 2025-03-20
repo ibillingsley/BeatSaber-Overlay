@@ -9,6 +9,7 @@
     opacity: 1;
     transition-property: opacity;
     transition-delay: 800ms;
+    max-width: 100%;
 }
 
 #songCard.top-left,
@@ -46,6 +47,7 @@
     border-radius: 6px;
     background-repeat: no-repeat;
     background-size: contain;
+    flex-shrink: 0;
 }
 
 #meta {
@@ -55,6 +57,12 @@
     justify-content: space-between;
     margin: -2px 16px 1px;
     line-height: 1;
+    overflow: hidden;
+}
+
+#meta * {
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 #title {
@@ -68,45 +76,41 @@
     margin-left: 5px;
 }
 
-#author {
+#info, #makers {
+    display: flex;
+    column-gap: 0.5em;
+}
+
+#makers {
     font-size: 16px;
     font-weight: 600;
 }
 
-#mapper {
-    font-size: 16px;
-    font-weight: 600;
-    margin-left: 5px;
-}
-
-#mapper:before {
+#mapper:not(:empty):before {
     content: "[";
 }
-#mapper:after {
+#mapper:not(:empty):after {
     content: "]";
 }
 
 #info {
-    display: flex;
-}
-
-#difficulty,
-#characteristic {
     font-size: 14px;
     font-weight: 600;
-    max-width: 50ch;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
-#characteristic {
-    margin: 0 5px;
+#difficultyLabel:not(:empty):before {
+    content: "[";
+}
+
+#difficultyLabel:not(:empty):after {
+    content: "]";
 }
 
 #bsrKey {
     font-size: 15px;
     font-weight: 700;
     letter-spacing: 2px;
+    flex-shrink: 0;
 }
 
 #bsrKey:not(:empty):before {
