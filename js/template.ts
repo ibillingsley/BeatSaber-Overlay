@@ -112,6 +112,7 @@ export class Template {
 
         element.css("transform-origin", position.replace(/(-)/g, " "));
         element.css("transform", "scale(" + scale + ")");
+        element.css("--scale", scale);
     }
 
     public moduleCorners(moduleName: Globals.E_MODULES, position: string): void {
