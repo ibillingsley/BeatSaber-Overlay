@@ -86,6 +86,10 @@
     content: "›";
 }
 
+#difficultyLabel {
+    flex-shrink: 99999;
+}
+
 #bsrKey {
     font-size: 15px;
     font-weight: 700;
