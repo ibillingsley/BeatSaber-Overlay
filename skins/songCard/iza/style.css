@@ -86,7 +86,8 @@
     content: "›";
 }
 
-#difficultyLabel {
+#difficultyLabel,
+#subTitle {
     flex-shrink: 99999;
 }
 
