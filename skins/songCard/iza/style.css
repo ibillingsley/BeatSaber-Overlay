@@ -44,10 +44,10 @@
     flex-direction: column;
     flex-grow: 1;
     justify-content: space-between;
-    margin: -4px 16px 0;
+    margin: -4px 16px -2px;
     overflow: hidden;
     line-height: 1.2;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 600;
 }
 
@@ -71,6 +71,7 @@
     font-weight: 700;
 }
 
+#subTitle,
 #author,
 #mapper {
     font-size: 16px;
@@ -99,7 +100,7 @@
 }
 
 #bsrKey {
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 700;
     letter-spacing: 2px;
     flex-shrink: 0;
