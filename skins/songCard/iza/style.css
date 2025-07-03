@@ -91,6 +91,13 @@
     flex-shrink: 99999;
 }
 
+#characteristicIcon {
+    width: 1.1em;
+    height: 1.1em;
+    flex-shrink: 0;
+    align-self: center;
+}
+
 #bsrKey {
     font-size: 15px;
     font-weight: 700;

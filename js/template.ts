@@ -63,7 +63,6 @@ export class Template {
                         case "author":
                         case "difficulty":
                         case "difficultyLabel":
-                        case "characteristic":
                         case "bsrKey":
                         case "bpm":
                         case "timeToLetters":
@@ -74,6 +73,11 @@ export class Template {
                         case "combo":
                         case "miss":
                             setText($("#" + key), value);
+                            break;
+
+                        case "characteristic":
+                            setText($("#" + key), value);
+                            $("#" + key + "Icon").attr("src", `pictures/${key}/${value}.svg`);
                             break;
 
                         case "cover":
