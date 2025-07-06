@@ -130,23 +130,8 @@ export class Template {
     }
 
     public moduleToggleDisplay(playerCardData: Globals.I_playerCard, songCardData: Globals.I_songCard): void {
-        if (playerCardData.disabled)
-            $("#playerCard").addClass("hidden");
-
-        if (songCardData.disabled)
-            $("#songCard").addClass("hidden");
-
-        if (!songCardData.started)
-            $("#songCard").addClass("hidden");
-
-        if (songCardData.started)
-            $("#songCard").removeClass("hidden");
-
-        if (!playerCardData.display)
-            $("#playerCard").addClass("hidden");
-
-        if (playerCardData.display)
-            $("#playerCard").removeClass("hidden");
+        $("#playerCard").toggleClass("hidden", playerCardData.disabled || !playerCardData.display);
+        $("#songCard").toggleClass("hidden", songCardData.disabled || !songCardData.started);
     }
 
     public stopOrStart(started: boolean, paused: boolean): void {
