@@ -12,6 +12,7 @@
     transition-property: opacity;
     transition-delay: 800ms;
     max-width: calc(100vw / var(--scale));
+    filter: drop-shadow(0 0 1px black) drop-shadow(0 0 1px black);
 }
 
 #songCard.top-right,
