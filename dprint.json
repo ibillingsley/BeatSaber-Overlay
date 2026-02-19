@@ -1,0 +1,18 @@
+{
+	"lineWidth": 120,
+	"newLineKind": "lf",
+	"useTabs": true,
+	"typescript": { "useBraces": "maintain" },
+	"json": {},
+	"markdown": {},
+	"malva": {},
+	"markup": {},
+	"excludes": ["**/node_modules", "**/build", "**/dist", "**/*-lock.json", "**/*.svg"],
+	"plugins": [
+		"https://plugins.dprint.dev/typescript-0.95.15.wasm",
+		"https://plugins.dprint.dev/json-0.21.1.wasm",
+		"https://plugins.dprint.dev/markdown-0.21.1.wasm",
+		"https://plugins.dprint.dev/g-plane/malva-v0.15.2.wasm",
+		"https://plugins.dprint.dev/g-plane/markup_fmt-v0.26.0.wasm"
+	]
+}
