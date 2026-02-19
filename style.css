@@ -5,7 +5,7 @@
 	src: url("fonts/montserrat.woff2") format("woff2");
 }
 
-:root {
+html {
 	font-size: 10px;
 }
 
@@ -13,9 +13,10 @@ body {
 	display: flex;
 	margin: 0;
 	padding: 1.4rem 1.6rem;
+	overflow: hidden;
 	font-family: "Montserrat", sans-serif;
 	white-space: nowrap;
-	background: #0000;
+	background: rgba(0, 0, 0, 0);
 	color: white;
 	filter: drop-shadow(0 0 0.1rem black) drop-shadow(0 0 0.1rem black);
 	transition: opacity 300ms ease-out;
