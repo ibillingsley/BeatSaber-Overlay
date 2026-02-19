@@ -2,37 +2,49 @@
 // https://github.com/hardcpp/BeatSaberPlus/wiki/%5BEN%5D-Song-Overlay
 
 const bspUrl = "ws://localhost:2947/socket";
-const retryMs = 5000;
+const retryMs = 10000;
 let retries = 0;
 
 function connect() {
 	console.log(`Connecting to ${bspUrl} (attempt ${retries++})`);
 	const ws = new WebSocket(bspUrl);
-	ws.onopen = () => console.log("Connection open.");
-	ws.onmessage = (e) => {
-		const data = JSON.parse(e.data);
-		switch (data._type) {
-			case "event":
-				switch (data._event) {
-					case "gameState":
-						document.body.className = data.gameStateChanged;
-						break;
+	ws.onopen = onOpen;
+	ws.onmessage = onMessage;
+	ws.onclose = onClose;
+}
 
-					case "mapInfo":
-						updateMapInfo(data.mapInfoChanged);
-						break;
-				}
-				break;
+function onOpen() {
+	console.log("Connection open.");
+	retries = 0;
+}
 
-			default:
-				console.log("message", e.data);
-				break;
-		}
-	};
-	ws.onclose = (e) => {
-		console.log(`Connection closed. code: ${e.code}, reason: ${e.reason}, clean: ${e.wasClean}`);
-		setTimeout(connect, retryMs);
-	};
+/** @param {MessageEvent<string>} e */
+function onMessage(e) {
+	/** @type {BeatSaberPlusEvent} */
+	const data = JSON.parse(e.data);
+	switch (data._type) {
+		case "event":
+			switch (data._event) {
+				case "gameState":
+					document.body.className = data.gameStateChanged;
+					break;
+
+				case "mapInfo":
+					updateMapInfo(data.mapInfoChanged);
+					break;
+			}
+			break;
+
+		default:
+			console.log("message", e.data);
+			break;
+	}
+}
+
+/** @param {CloseEvent} e */
+function onClose(e) {
+	console.log(`Connection closed. code: ${e.code}, reason: ${e.reason}, clean: ${e.wasClean}`);
+	setTimeout(connect, retryMs);
 }
 
 const cover = document.getElementById("cover");
@@ -56,10 +68,11 @@ function updateMapInfo(data) {
 	mapper.textContent = data.mapper || "";
 	difficulty.textContent = data.difficulty.replace("Plus", " +") || "";
 	characteristicIcon.setAttribute("src", `images/characteristic/${data.characteristic}.svg`);
-	difficultyLabel.textContent = "";
-	bsrKey.textContent = data.BSRKey || "";
+	difficultyLabel.textContent = ""; // BS+ does not provide label
+	bsrKey.textContent = data.BSRKey || ""; // Always empty?
 	type.textContent = !custom ? "OST" : data.level_id.endsWith(" WIP") ? "WIP" : "";
 
+	// Fetch extra info from BeatSaver
 	if (custom) {
 		fetch(`https://api.beatsaver.com/maps/hash/${data.level_id.substring(13, 53)}`)
 			.then(response => response.json())
