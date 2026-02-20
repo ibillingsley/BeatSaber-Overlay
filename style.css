@@ -20,10 +20,10 @@ body {
 	color: white;
 	filter: drop-shadow(0 0 0.1rem black) drop-shadow(0 0 0.1rem black);
 	transition: opacity 300ms ease-out;
-	transition-delay: 200ms;
 }
 
-body:not(.Playing) {
+body.loading,
+body:not([data-game-state="Playing"]) {
 	opacity: 0;
 }
 

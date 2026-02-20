@@ -26,7 +26,7 @@ function onMessage(e) {
 		case "event":
 			switch (data._event) {
 				case "gameState":
-					document.body.className = data.gameStateChanged;
+					document.body.dataset.gameState = data.gameStateChanged;
 					break;
 
 				case "mapInfo":
@@ -59,7 +59,7 @@ const bsrKey = document.getElementById("bsrKey");
 const type = document.getElementById("type");
 
 /** @param {MapInfoChanged} data */
-function updateMapInfo(data) {
+async function updateMapInfo(data) {
 	const custom = data.level_id.startsWith("custom_level_");
 	cover.style.backgroundImage = data.coverRaw ? `url("data:image/jpeg;base64,${data.coverRaw}")` : "";
 	title.textContent = data.name || "";
@@ -74,21 +74,26 @@ function updateMapInfo(data) {
 
 	// Fetch extra info from BeatSaver
 	if (custom) {
-		fetch(`https://api.beatsaver.com/maps/hash/${data.level_id.substring(13, 53)}`)
-			.then(response => response.json())
-			.then(map => {
-				if (!map.id) return;
-				bsrKey.textContent = map.id;
-				mapper.textContent = map.metadata.levelAuthorName; // Replace mapper name with full authors list
-				// Find difficulty label
-				const diff = map.versions[0].diffs.find(d =>
-					d.characteristic === data.characteristic && d.difficulty === data.difficulty
-				);
-				if (diff.label) difficultyLabel.textContent = diff.label;
-			});
+		document.body.classList.add("loading");
+		try {
+			const response = await fetch(`https://api.beatsaver.com/maps/hash/${data.level_id.substring(13, 53)}`);
+			const map = await response.json();
+			if (!map.id) return;
+			bsrKey.textContent = map.id;
+			mapper.textContent = map.metadata.levelAuthorName; // Replace mapper name with full authors list
+			// Find difficulty label
+			const diff = map.versions[0].diffs.find(d =>
+				d.characteristic === data.characteristic && d.difficulty === data.difficulty
+			);
+			if (diff.label) difficultyLabel.textContent = diff.label;
+		} finally {
+			document.body.classList.remove("loading");
+		}
 	}
 }
 
 connect();
 
-document.documentElement.onclick = () => document.body.classList.toggle("Playing");
+document.documentElement.onclick = function() {
+	document.body.dataset.gameState = document.body.dataset.gameState === "Playing" ? "Menu" : "Playing";
+};
