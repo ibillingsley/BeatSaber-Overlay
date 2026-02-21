@@ -66,7 +66,7 @@ async function updateMapInfo(data) {
 	subTitle.textContent = data.sub_name || "";
 	artist.textContent = data.artist || "";
 	mapper.textContent = data.mapper || "";
-	difficulty.textContent = data.difficulty.replace("Plus", " +") || "";
+	difficulty.textContent = data.difficulty.replace("Plus", "\u2009+") || "";
 	characteristicIcon.setAttribute("src", `images/characteristic/${data.characteristic}.svg`);
 	difficultyLabel.textContent = ""; // BS+ does not provide label
 	bsrKey.textContent = data.BSRKey || ""; // Always empty?
