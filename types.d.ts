@@ -64,5 +64,7 @@ type BeatSaberPlusEvent = HandshakeEvent | GameStateEvent | ResumeEvent | PauseE
 type MapInfoChanged = MapInfoChangedEvent["mapInfoChanged"];
 
 interface Document {
-	getElementById(elementId: string): HTMLElement; // Assume non-null
+	// Assume non-null
+	getElementById(elementId: `${string}Icon`): HTMLImageElement;
+	getElementById(elementId: string): HTMLElement;
 }

@@ -55,25 +55,26 @@ const mapper = document.getElementById("mapper");
 const difficulty = document.getElementById("difficulty");
 const characteristicIcon = document.getElementById("characteristicIcon");
 const difficultyLabel = document.getElementById("difficultyLabel");
-const bsrKey = document.getElementById("bsrKey");
 const type = document.getElementById("type");
+const bsrKey = document.getElementById("bsrKey");
 
 /** @param {MapInfoChanged} data */
 async function updateMapInfo(data) {
 	const custom = data.level_id.startsWith("custom_level_");
+	const wip = custom && data.level_id.endsWith("WIP");
 	cover.style.backgroundImage = data.coverRaw ? `url("data:image/jpeg;base64,${data.coverRaw}")` : "";
 	title.textContent = data.name || "";
 	subTitle.textContent = data.sub_name || "";
 	artist.textContent = data.artist || "";
 	mapper.textContent = data.mapper || "";
-	difficulty.textContent = data.difficulty.replace("Plus", "\u2009+") || "";
-	characteristicIcon.setAttribute("src", `images/characteristic/${data.characteristic}.svg`);
+	difficulty.textContent = data.difficulty.replace("Plus", " +") || "";
+	characteristicIcon.src = `images/characteristic/${data.characteristic}.svg`;
 	difficultyLabel.textContent = ""; // BS+ does not provide label
-	bsrKey.textContent = data.BSRKey || ""; // Always empty?
-	type.textContent = !custom ? "OST" : data.level_id.endsWith(" WIP") ? "WIP" : "";
+	type.textContent = !custom ? "OST" : wip ? "WIP" : "";
+	bsrKey.textContent = data.BSRKey || "???"; // Always empty?
 
 	// Fetch extra info from BeatSaver
-	if (custom) {
+	if (custom && !wip) {
 		document.body.classList.add("loading");
 		try {
 			const response = await fetch(`https://api.beatsaver.com/maps/hash/${data.level_id.substring(13, 53)}`);

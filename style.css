@@ -112,3 +112,7 @@ body:not([data-game-state="Playing"]) {
 	content: "!bsr ";
 	letter-spacing: normal;
 }
+
+#type:not(:empty) + #bsrKey {
+	display: none;
+}
