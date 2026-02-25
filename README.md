@@ -4,10 +4,10 @@ Simple Beat Saber stream overlay for [twitch.tv/iza_k](https://www.twitch.tv/iza
 
 Requires [BeatSaberPlus](https://github.com/hardcpp/BeatSaberPlus) SongOverlay
 
+### Preview
 <img width="606" height="96" alt="Screenshot" src="https://github.com/user-attachments/assets/96b8e7ce-66ed-4327-a915-ee309d2296c3" />
 
 ## Usage - OBS Studio
-
 Add Source > Browser > URL: `https://bs-overlay.netlify.app/`
 
 ### Configuration - Custom CSS
