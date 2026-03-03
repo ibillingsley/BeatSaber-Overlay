@@ -1,15 +1,46 @@
 "use strict";
-// https://github.com/hardcpp/BeatSaberPlus/wiki/%5BEN%5D-Song-Overlay
 
-const bspUrl = "ws://localhost:2947/socket";
+// Data providers
+
+const beatSaberPlus = {
+	// https://github.com/hardcpp/BeatSaberPlus/wiki/%5BEN%5D-Song-Overlay
+	url: "ws://localhost:2947/socket",
+
+	/** @param {MessageEvent<string>} e */
+	onMessage: function(e) {
+		/** @type {BeatSaberPlusEvent} */
+		const data = JSON.parse(e.data);
+		switch (data._type) {
+			case "event":
+				switch (data._event) {
+					case "gameState":
+						document.body.dataset.gameState = data.gameStateChanged;
+						break;
+
+					case "mapInfo":
+						updateMapInfo(data.mapInfoChanged);
+						break;
+				}
+				break;
+
+			default:
+				console.log("message", e.data);
+				break;
+		}
+	},
+};
+
+// WebSocket connection
+
+const provider = beatSaberPlus;
 const retryMs = 10000;
 let retries = 0;
 
 function connect() {
-	console.log(`Connecting to ${bspUrl} (attempt ${retries++})`);
-	const ws = new WebSocket(bspUrl);
+	console.log(`Connecting to ${provider.url} (attempt ${retries++})`);
+	const ws = new WebSocket(provider.url);
 	ws.onopen = onOpen;
-	ws.onmessage = onMessage;
+	ws.onmessage = provider.onMessage;
 	ws.onclose = onClose;
 }
 
@@ -18,42 +49,21 @@ function onOpen() {
 	retries = 0;
 }
 
-/** @param {MessageEvent<string>} e */
-function onMessage(e) {
-	/** @type {BeatSaberPlusEvent} */
-	const data = JSON.parse(e.data);
-	switch (data._type) {
-		case "event":
-			switch (data._event) {
-				case "gameState":
-					document.body.dataset.gameState = data.gameStateChanged;
-					break;
-
-				case "mapInfo":
-					updateMapInfo(data.mapInfoChanged);
-					break;
-			}
-			break;
-
-		default:
-			console.log("message", e.data);
-			break;
-	}
-}
-
 /** @param {CloseEvent} e */
 function onClose(e) {
 	console.log(`Connection closed. code: ${e.code}, reason: ${e.reason}, clean: ${e.wasClean}`);
 	setTimeout(connect, retryMs);
 }
 
-const cover = document.getElementById("cover");
+// Map info
+
+const cover = document.getElementById("coverImg");
 const title = document.getElementById("title");
 const subTitle = document.getElementById("subTitle");
 const artist = document.getElementById("artist");
 const mapper = document.getElementById("mapper");
 const difficulty = document.getElementById("difficulty");
-const characteristicIcon = document.getElementById("characteristicIcon");
+const characteristic = document.getElementById("characteristicImg");
 const difficultyLabel = document.getElementById("difficultyLabel");
 const type = document.getElementById("type");
 const bsrKey = document.getElementById("bsrKey");
@@ -62,13 +72,13 @@ const bsrKey = document.getElementById("bsrKey");
 async function updateMapInfo(data) {
 	const custom = data.level_id.startsWith("custom_level_");
 	const wip = custom && data.level_id.endsWith("WIP");
-	cover.style.backgroundImage = data.coverRaw ? `url("data:image/jpeg;base64,${data.coverRaw}")` : "";
+	cover.src = data.coverRaw ? `data:image/jpeg;base64,${data.coverRaw}` : "images/unknown.svg";
 	title.textContent = data.name || "";
 	subTitle.textContent = data.sub_name || "";
 	artist.textContent = data.artist || "";
 	mapper.textContent = data.mapper || "";
 	difficulty.textContent = data.difficulty.replace("Plus", " +") || "";
-	characteristicIcon.src = `images/characteristic/${data.characteristic}.svg`;
+	characteristic.src = `images/characteristic/${data.characteristic}.svg`;
 	difficultyLabel.textContent = ""; // BS+ does not provide label
 	type.textContent = !custom ? "OST" : wip ? "WIP" : "";
 	bsrKey.textContent = data.BSRKey || "???"; // Always empty?
@@ -95,6 +105,4 @@ async function updateMapInfo(data) {
 
 connect();
 
-document.documentElement.onclick = function() {
-	document.body.dataset.gameState = document.body.dataset.gameState === "Playing" ? "Menu" : "Playing";
-};
+document.documentElement.onclick = () => document.body.classList.toggle("preview");

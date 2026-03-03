@@ -17,7 +17,7 @@ To change size, set root font size (default 10px)
 ```
 To right align
 ```css
-body { flex-direction: row-reverse; } .row { justify-content: flex-end; }
+body > .row { flex-direction: row-reverse; } .row { justify-content: flex-end; }
 ```
 To change fade duration (default 300ms)
 ```css

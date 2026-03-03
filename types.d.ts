@@ -65,6 +65,7 @@ type MapInfoChanged = MapInfoChangedEvent["mapInfoChanged"];
 
 interface Document {
 	// Assume non-null
-	getElementById(elementId: `${string}Icon`): HTMLImageElement;
+	getElementById(elementId: `${string}Img`): HTMLImageElement;
+	getElementById(elementId: `${string}Input`): HTMLInputElement;
 	getElementById(elementId: string): HTMLElement;
 }
