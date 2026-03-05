@@ -1,27 +1,44 @@
 @font-face {
 	font-family: "Montserrat";
 	font-display: swap;
-	font-weight: 600 700;
-	src: url("fonts/montserrat.woff2") format("woff2");
+	font-weight: 600;
+	src: url("fonts/montserrat-600.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Montserrat";
+	font-display: swap;
+	font-weight: 700;
+	src: url("fonts/montserrat-700.woff2") format("woff2");
+}
+
+* {
+	box-sizing: border-box;
 }
 
 html {
-	font-size: 10px;
+	font-size: calc(var(--scale, 1) * 10px);
 }
 
 body {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	height: 100vh;
 	margin: 0;
 	padding: 1.4rem 1.6rem;
 	overflow: hidden;
 	font-family: "Montserrat", sans-serif;
-	font-size: 1.5rem;
+	font-size: 1.6rem;
 	font-weight: 600;
 	line-height: 1.2;
 	white-space: nowrap;
 	background: rgba(0, 0, 0, 0);
 	color: white;
 	filter: drop-shadow(0 0 0.1rem black) drop-shadow(0 0 0.1rem black);
-	transition: opacity 300ms ease-out;
+	transition-property: opacity;
+	transition-timing-function: ease-out;
+	transition-duration: calc(var(--fade, 300) * 1ms);
 }
 
 body.loading,
@@ -29,12 +46,27 @@ body:not([data-game-state="Playing"], .preview) {
 	opacity: 0;
 }
 
+span:empty {
+	display: none;
+}
+
 .row {
 	display: flex;
 	gap: 1.6rem;
+	align-items: baseline;
 }
 
-.column {
+/* Map info */
+
+#coverImg {
+	width: 6.8rem;
+	height: 6.8rem;
+	border-radius: 0.6rem;
+	flex-shrink: 0;
+	align-self: flex-start;
+}
+
+#mapInfo {
 	display: flex;
 	flex-direction: column;
 	flex-grow: 1;
@@ -43,25 +75,13 @@ body:not([data-game-state="Playing"], .preview) {
 	overflow: hidden;
 }
 
-.column * {
-	overflow: hidden;
-	text-overflow: ellipsis;
-}
-
-.column .row {
-	align-items: baseline;
+#mapInfo .row {
 	gap: 0.9rem;
 }
 
-.column span:empty {
-	display: none;
-}
-
-#coverImg {
-	width: 6.8rem;
-	height: 6.8rem;
-	border-radius: 0.6rem;
-	flex-shrink: 0;
+#mapInfo * {
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 #title {
@@ -69,19 +89,13 @@ body:not([data-game-state="Playing"], .preview) {
 	font-weight: 700;
 }
 
-#subTitle,
-#artist,
-#mapper {
-	font-size: 1.6rem;
-}
-
-#mapper:before,
-#difficultyLabel:before {
+#mapper::before,
+#difficultyLabel::before {
 	content: "‹";
 }
 
-#mapper:after,
-#difficultyLabel:after {
+#mapper::after,
+#difficultyLabel::after {
 	content: "›";
 }
 
@@ -90,16 +104,20 @@ body:not([data-game-state="Playing"], .preview) {
 	flex-shrink: 99999;
 }
 
+#difficulty,
+#difficultyLabel {
+	font-size: 1.5rem;
+}
+
 #characteristicImg {
-	width: 1.1em;
-	height: 1.1em;
+	width: 1.7rem;
+	height: 1.7rem;
 	flex-shrink: 0;
 	align-self: center;
 }
 
 #type,
 #bsrKey {
-	font-size: 1.6rem;
 	font-weight: 700;
 	flex-shrink: 0;
 }
@@ -108,11 +126,108 @@ body:not([data-game-state="Playing"], .preview) {
 	letter-spacing: 0.2rem;
 }
 
-#bsrKey:before {
+#bsrKey::before {
 	content: "!bsr ";
 	letter-spacing: normal;
 }
 
 #type:not(:empty) + #bsrKey {
 	display: none;
+}
+
+/* Song time */
+
+#time {
+	align-self: flex-start;
+	width: 6.8rem;
+	font-size: 1.35rem;
+	text-align: right;
+	line-height: 1.4;
+	letter-spacing: -0.05em;
+}
+
+#time,
+#accuracy,
+#mistakes {
+	font-feature-settings: "tnum";
+	font-variant-numeric: tabular-nums;
+}
+
+/* Score */
+
+#score {
+	display: contents;
+}
+
+#accuracy {
+	font-size: 2.4rem;
+	font-weight: 700;
+}
+
+#accuracy::after {
+	display: inline-block;
+	content: "%";
+	font-size: 1.8rem;
+}
+
+#accuracy.failed {
+	text-decoration: line-through red;
+}
+
+#mistakes {
+	display: inline;
+	font-size: 1.8rem;
+}
+
+#mistakes::after {
+	content: "⤫";
+}
+
+#mistakes:empty::after {
+	content: "FC";
+}
+
+/* Settings */
+
+body:not(.cover) #coverImg,
+body:not(.mapInfo) #mapInfo,
+body:not(.time) #time,
+body:not(.score) #score {
+	display: none;
+}
+
+body.right > .row {
+	flex-direction: row-reverse;
+}
+
+body.right #mapInfo .row {
+	justify-content: flex-end;
+}
+
+body.bottom {
+	flex-direction: column-reverse;
+}
+
+body.bottom #time {
+	align-self: flex-end;
+}
+
+#settings {
+	display: none;
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	flex-direction: column;
+	gap: 2px;
+	font-family: system-ui;
+	font-size: 16px;
+}
+
+.preview #settings {
+	display: flex;
+}
+
+#settings label * {
+	float: right;
+	margin-left: 1em;
 }

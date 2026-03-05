@@ -1,6 +1,6 @@
 "use strict";
 
-// Data providers
+// WebSocket connection
 
 const beatSaberPlus = {
 	// https://github.com/hardcpp/BeatSaberPlus/wiki/%5BEN%5D-Song-Overlay
@@ -20,6 +20,18 @@ const beatSaberPlus = {
 					case "mapInfo":
 						updateMapInfo(data.mapInfoChanged);
 						break;
+
+					case "pause":
+						updateTime(data.pauseTime, true);
+						break;
+
+					case "resume":
+						updateTime(data.resumeTime, false);
+						break;
+
+					case "score":
+						updateScore(data.scoreEvent);
+						break;
 				}
 				break;
 
@@ -29,8 +41,6 @@ const beatSaberPlus = {
 		}
 	},
 };
-
-// WebSocket connection
 
 const provider = beatSaberPlus;
 const retryMs = 10000;
@@ -55,6 +65,8 @@ function onClose(e) {
 	setTimeout(connect, retryMs);
 }
 
+connect();
+
 // Map info
 
 const cover = document.getElementById("coverImg");
@@ -67,12 +79,14 @@ const characteristic = document.getElementById("characteristicImg");
 const difficultyLabel = document.getElementById("difficultyLabel");
 const type = document.getElementById("type");
 const bsrKey = document.getElementById("bsrKey");
+let timeMultiplier = 1;
+let duration = 0;
 
 /** @param {MapInfoChanged} data */
 async function updateMapInfo(data) {
 	const custom = data.level_id.startsWith("custom_level_");
 	const wip = custom && data.level_id.endsWith("WIP");
-	cover.src = data.coverRaw ? `data:image/jpeg;base64,${data.coverRaw}` : "images/unknown.svg";
+	cover.src = data.coverRaw ? `data:image/png;base64,${data.coverRaw}` : "images/unknown.svg";
 	title.textContent = data.name || "";
 	subTitle.textContent = data.sub_name || "";
 	artist.textContent = data.artist || "";
@@ -82,6 +96,8 @@ async function updateMapInfo(data) {
 	difficultyLabel.textContent = ""; // BS+ does not provide label
 	type.textContent = !custom ? "OST" : wip ? "WIP" : "";
 	bsrKey.textContent = data.BSRKey || "???"; // Always empty?
+	timeMultiplier = data.timeMultiplier || 1;
+	duration = data.duration / 1000;
 
 	// Fetch extra info from BeatSaver
 	if (custom && !wip) {
@@ -103,6 +119,117 @@ async function updateMapInfo(data) {
 	}
 }
 
-connect();
+// Song time
 
-document.documentElement.onclick = () => document.body.classList.toggle("preview");
+const timeText = document.getElementById("time");
+const intervalMs = 500;
+let intervalId = 0;
+let currentTime = 0;
+
+/** @param {number} time @param {boolean} paused */
+function updateTime(time, paused) {
+	if (!settings.time) return;
+	currentTime = time;
+	timeText.textContent = `${formatTime(currentTime)} / ${formatTime(duration)}`;
+	clearInterval(intervalId);
+	if (paused) return;
+	intervalId = window.setInterval(() => {
+		currentTime += intervalMs * timeMultiplier / 1000;
+		timeText.textContent = `${formatTime(currentTime)} / ${formatTime(duration)}`;
+	}, intervalMs);
+}
+
+/** @param {number} t */
+function formatTime(t) {
+	t = Math.floor(t);
+	const minutes = Math.floor(t / 60);
+	const seconds = t - minutes * 60;
+	return `${minutes}:${String(seconds).padStart(2, "0")}`;
+}
+
+// Score
+
+const accuracy = document.getElementById("accuracy");
+const mistakes = document.getElementById("mistakes");
+
+/** @param {Score} score */
+function updateScore(score) {
+	if (!settings.score) return;
+	accuracy.textContent = (score.accuracy * 100).toFixed(1);
+	mistakes.textContent = score.missCount ? String(score.missCount) : "";
+	accuracy.classList.toggle("failed", score.currentHealth === 0);
+}
+
+// Settings
+
+const settings = {
+	cover: true,
+	mapInfo: true,
+	time: true,
+	score: true,
+	right: false,
+	bottom: false,
+	scale: 1,
+	fade: 300,
+};
+
+const defaults = structuredClone(settings);
+const style = document.createElement("style");
+
+function loadSettings() {
+	const params = new URLSearchParams(location.hash.slice(1));
+	let css = "";
+	for (const key of Object.keys(settings)) {
+		const value = JSON.parse(params.get(key) || "null") ?? defaults[key];
+		settings[key] = value;
+		if (typeof value === "boolean") document.body.classList.toggle(key, value);
+		else css += `--${key}: ${value}; `;
+	}
+	style.textContent = `:root { ${css}}`;
+}
+
+function saveSettings() {
+	const params = new URLSearchParams();
+	for (const [key, value] of Object.entries(settings))
+		if (value !== defaults[key]) params.set(key, JSON.stringify(value));
+	location.replace("#" + params.toString());
+}
+
+window.onhashchange = loadSettings;
+loadSettings();
+document.head.appendChild(style);
+
+// Settings UI
+
+for (const key of ["cover", "mapInfo", "time", "score"]) {
+	const input = document.getElementById(`${key}Input`);
+	input.checked = settings[key];
+	input.oninput = () => {
+		settings[key] = input.checked;
+		saveSettings();
+	};
+}
+
+const scale = document.getElementById("scaleInput");
+scale.valueAsNumber = settings.scale * 100;
+scale.oninput = () => {
+	settings.scale = scale.valueAsNumber / 100;
+	saveSettings();
+};
+
+const position = document.getElementById("positionInput");
+position.value = JSON.stringify([settings.right, settings.bottom]);
+position.onchange = () => {
+	[settings.right, settings.bottom] = JSON.parse(position.value);
+	saveSettings();
+};
+
+const fade = document.getElementById("fadeInput");
+fade.valueAsNumber = settings.fade;
+fade.oninput = () => {
+	settings.fade = fade.valueAsNumber;
+	saveSettings();
+};
+
+document.documentElement.onclick = e => document.body.classList.toggle("preview");
+document.getElementById("settings").onclick = e => e.stopPropagation();

@@ -2,28 +2,29 @@
 
 Simple Beat Saber stream overlay for [twitch.tv/iza_k](https://www.twitch.tv/iza_k)
 
-Requires [BeatSaberPlus](https://github.com/hardcpp/BeatSaberPlus) SongOverlay
+Requires [BeatSaberPlus](https://github.com/hardcpp/BeatSaberPlus)
 
 ### Preview
-<img width="606" height="96" alt="Screenshot" src="https://github.com/user-attachments/assets/96b8e7ce-66ed-4327-a915-ee309d2296c3" />
 
-## Usage - OBS Studio
-Add Source > Browser > URL: `https://bs-overlay.netlify.app/`
+![](images/screenshots/preview.png)
 
-### Configuration - Custom CSS
-To change size, set root font size (default 10px)
+## Usage
+
+1. Go to [bs-overlay.netlify.app](https://bs-overlay.netlify.app/)
+2. Click anywhere on page to show settings  
+   ![](images/screenshots/settings.png)
+3. Copy URL
+4. OBS Studio: Add Source > Browser > paste URL
+5. BeatSaber+ settings, enable the Song Overlay module
+
+### Advanced
+
+[Download](https://github.com/ibillingsley/BeatSaber-Overlay/archive/refs/heads/main.zip) the source code to use the overlay locally without hosting it online.
+
+Note: in OBS browser source, use URL `file:///C:/path-to-overlay.../index.html` instead of "Local file" so that URL parameters work.
+
+You can further customize the overlay with Custom CSS. Example:
+
 ```css
-:root { font-size: 15px; }
-```
-To right align
-```css
-body > .row { flex-direction: row-reverse; } .row { justify-content: flex-end; }
-```
-To change fade duration (default 300ms)
-```css
-body { transition-duration: 500ms; }
-```
-To change font
-```css
-body { font-family: "Comic Sans MS", cursive; }
+body { font-family: "Comic Sans MS"; }
 ```
