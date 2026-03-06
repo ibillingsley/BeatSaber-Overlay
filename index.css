@@ -46,6 +46,10 @@ body:not([data-game-state="Playing"], .preview) {
 	opacity: 0;
 }
 
+span {
+	align-self: baseline;
+}
+
 span:empty {
 	display: none;
 }
@@ -53,7 +57,6 @@ span:empty {
 .row {
 	display: flex;
 	gap: 1.6rem;
-	align-items: baseline;
 }
 
 /* Map info */
@@ -63,7 +66,6 @@ span:empty {
 	height: 6.8rem;
 	border-radius: 0.6rem;
 	flex-shrink: 0;
-	align-self: flex-start;
 }
 
 #mapInfo {
@@ -138,7 +140,6 @@ span:empty {
 /* Song time */
 
 #time {
-	align-self: flex-start;
 	width: 6.8rem;
 	font-size: 1.35rem;
 	text-align: right;
