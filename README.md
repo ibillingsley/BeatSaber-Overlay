@@ -1,7 +1,6 @@
 # Beat Saber Overlay
 
-Simple Beat Saber stream overlay for [twitch.tv/iza_k](https://www.twitch.tv/iza_k)
-
+Simple Beat Saber stream overlay for [twitch.tv/iza_k](https://www.twitch.tv/iza_k)  
 Requires [BeatSaberPlus](https://github.com/hardcpp/BeatSaberPlus)
 
 ### Preview
@@ -11,7 +10,7 @@ Requires [BeatSaberPlus](https://github.com/hardcpp/BeatSaberPlus)
 ## Usage
 
 1. Go to [bs-overlay.netlify.app](https://bs-overlay.netlify.app/)
-2. Click anywhere on page to show settings  
+2. Click anywhere on page to show settings (saved in URL)  
    ![](images/screenshots/settings.png)
 3. Copy URL
 4. OBS Studio: Add Source > Browser > paste URL

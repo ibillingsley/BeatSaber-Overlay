@@ -61,7 +61,7 @@ interface ScoreEvent {
 }
 
 type BeatSaberPlusEvent = HandshakeEvent | GameStateEvent | ResumeEvent | PauseEvent | MapInfoChangedEvent | ScoreEvent;
-type MapInfoChanged = MapInfoChangedEvent["mapInfoChanged"];
+type MapInfo = MapInfoChangedEvent["mapInfoChanged"];
 type Score = ScoreEvent["scoreEvent"];
 
 interface Document {

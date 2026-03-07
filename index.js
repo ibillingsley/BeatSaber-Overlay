@@ -82,7 +82,7 @@ const bsrKey = document.getElementById("bsrKey");
 let timeMultiplier = 1;
 let duration = 0;
 
-/** @param {MapInfoChanged} data */
+/** @param {MapInfo} data */
 async function updateMapInfo(data) {
 	const custom = data.level_id.startsWith("custom_level_");
 	const wip = custom && data.level_id.endsWith("WIP");
