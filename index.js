@@ -91,7 +91,7 @@ async function updateMapInfo(data) {
 	subTitle.textContent = data.sub_name || "";
 	artist.textContent = data.artist || "";
 	mapper.textContent = data.mapper || "";
-	difficulty.textContent = data.difficulty.replace("Plus", " +") || "";
+	difficulty.textContent = data.difficulty?.replace("Plus", " +") || "";
 	characteristic.src = `images/characteristic/${data.characteristic}.svg`;
 	difficultyLabel.textContent = ""; // BS+ does not provide label
 	type.textContent = !custom ? "OST" : wip ? "WIP" : "";
@@ -179,10 +179,10 @@ const style = document.createElement("style");
 function loadSettings() {
 	const params = new URLSearchParams(location.hash.slice(1));
 	let css = "";
-	for (const key of Object.keys(settings)) {
-		const value = JSON.parse(params.get(key) || "null") ?? defaults[key];
+	for (const [key, def] of Object.entries(defaults)) {
+		const value = JSON.parse(params.get(key) || "null") ?? def;
 		settings[key] = value;
-		if (typeof value === "boolean") document.body.classList.toggle(key, value);
+		if (typeof def === "boolean") document.body.classList.toggle(key, value);
 		else css += `--${key}: ${value}; `;
 	}
 	style.textContent = `:root { ${css}}`;
