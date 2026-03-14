@@ -64,6 +64,7 @@ span:empty {
 #coverImg {
 	width: 6.8rem;
 	height: 6.8rem;
+	margin-bottom: 0.2rem;
 	border-radius: 0.6rem;
 	flex-shrink: 0;
 }
@@ -140,11 +141,21 @@ span:empty {
 /* Song time */
 
 #time {
+	display: flex;
+	flex-direction: column;
 	width: 6.8rem;
 	font-size: 1.35rem;
 	text-align: right;
-	line-height: 1.4;
+	line-height: 1.7;
 	letter-spacing: -0.05em;
+}
+
+#timeBar {
+	max-width: 100%;
+	height: 0.2rem;
+	margin-top: -0.2rem;
+	background: currentColor;
+	border-radius: 0.6rem;
 }
 
 #time,
@@ -210,7 +221,7 @@ body.bottom {
 }
 
 body.bottom #time {
-	align-self: flex-end;
+	flex-direction: column-reverse;
 }
 
 #settings {

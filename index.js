@@ -121,7 +121,8 @@ async function updateMapInfo(data) {
 
 // Song time
 
-const timeText = document.getElementById("time");
+const timeText = document.getElementById("timeText");
+const timeBar = document.getElementById("timeBar");
 const intervalMs = 500;
 let intervalId = 0;
 let currentTime = 0;
@@ -129,14 +130,17 @@ let currentTime = 0;
 /** @param {number} time @param {boolean} paused */
 function updateTime(time, paused) {
 	if (!settings.time) return;
-	currentTime = time;
-	timeText.textContent = `${formatTime(currentTime)} / ${formatTime(duration)}`;
+	setTime(time);
 	clearInterval(intervalId);
 	if (paused) return;
-	intervalId = window.setInterval(() => {
-		currentTime += intervalMs * timeMultiplier / 1000;
-		timeText.textContent = `${formatTime(currentTime)} / ${formatTime(duration)}`;
-	}, intervalMs);
+	intervalId = window.setInterval(() => setTime(currentTime + intervalMs * timeMultiplier / 1000), intervalMs);
+}
+
+/** @param {number} time */
+function setTime(time) {
+	currentTime = time;
+	timeText.textContent = `${formatTime(currentTime)} / ${formatTime(duration)}`;
+	timeBar.style.width = `${currentTime / (duration || Infinity) * 100}%`;
 }
 
 /** @param {number} t */
