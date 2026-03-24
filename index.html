@@ -1,59 +1,59 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<meta charset="utf-8">
-	<title>BS Overlay</title>
-	<link rel="stylesheet" href="index.css">
-</head>
-<body>
-	<div class="row">
-		<img id="coverImg" src="images/unknown.svg">
-		<div id="mapInfo">
-			<div class="row">
-				<span id="title">Title</span>
-				<span id="subTitle">Subtitle</span>
-			</div>
-			<div class="row">
-				<span id="artist">Artist</span>
-				<span id="mapper">Mapper</span>
-			</div>
-			<div class="row">
-				<span id="difficulty">Easy</span>
-				<img id="characteristicImg" src="images/characteristic/Standard.svg">
-				<span id="difficultyLabel">Diff Label</span>
-				<span id="type"></span>
-				<span id="bsrKey">25f</span>
+	<head>
+		<meta charset="utf-8">
+		<title>BS Overlay</title>
+		<link rel="stylesheet" href="index.css">
+	</head>
+	<body>
+		<div class="row">
+			<img id="coverImg" src="images/unknown.svg">
+			<div id="mapInfo">
+				<div class="row">
+					<span id="title">Title</span>
+					<span id="subTitle">Subtitle</span>
+				</div>
+				<div class="row">
+					<span id="artist">Artist</span>
+					<span id="mapper">Mapper</span>
+				</div>
+				<div class="row">
+					<span id="difficulty">Easy</span>
+					<img id="characteristicImg" src="images/characteristic/Standard.svg">
+					<span id="difficultyLabel">Diff Label</span>
+					<span id="type"></span>
+					<span id="bsrKey">25f</span>
+				</div>
 			</div>
 		</div>
-	</div>
-	<div class="row">
-		<div id="time">
-			<div id="timeBar" style="width: 28%;"></div>
-			<div id="timeText">1:23 / 4:56</div>
+		<div class="row">
+			<div id="time">
+				<div id="timeBar" style="width: 28%"></div>
+				<div id="timeText">1:23 / 4:56</div>
+			</div>
+			<div id="score">
+				<span id="accuracy">96.9</span>
+				<span id="mistakes">7</span>
+			</div>
 		</div>
-		<div id="score">
-			<span id="accuracy">96.9</span>
-			<span id="mistakes">7</span>
-		</div>
-	</div>
-	<dialog id="settings">
-		<strong>Settings</strong>
-		<label>Show cover: <input id="coverInput" type="checkbox"></label>
-		<label>Show map info: <input id="mapInfoInput" type="checkbox"></label>
-		<label>Show time: <input id="timeInput" type="checkbox"></label>
-		<label>Show score: <input id="scoreInput" type="checkbox"></label>
-		<label>Position: <select id="positionInput">
-				<option value="[false,false]">Top left</option>
-				<option value="[true,false]">Top right</option>
-				<option value="[false,true]">Bottom left</option>
-				<option value="[true,true]">Bottom right</option>
-			</select></label>
-		<label>Scale (%): <input id="scaleInput" type="number" min="10" max="1000" step="5"></label>
-		<label>Fade (ms): <input id="fadeInput" type="number" min="0" max="5000" step="10"></label>
-		<br>
-		<strong>About</strong>
-		<a href="https://github.com/ibillingsley/BeatSaber-Overlay" target="_blank">Source code</a>
-	</dialog>
-	<script src="index.js"></script>
-</body>
+		<dialog id="settings">
+			<strong>Settings</strong>
+			<label>Show cover: <input id="coverInput" type="checkbox"></label>
+			<label>Show map info: <input id="mapInfoInput" type="checkbox"></label>
+			<label>Show time: <input id="timeInput" type="checkbox"></label>
+			<label>Show score: <input id="scoreInput" type="checkbox"></label>
+			<label>Position: <select id="positionInput">
+					<option value="[false,false]">Top left</option>
+					<option value="[true,false]">Top right</option>
+					<option value="[false,true]">Bottom left</option>
+					<option value="[true,true]">Bottom right</option>
+				</select></label>
+			<label>Scale (%): <input id="scaleInput" type="number" min="10" max="1000" step="5"></label>
+			<label>Fade (ms): <input id="fadeInput" type="number" min="0" max="5000" step="10"></label>
+			<br>
+			<strong>About</strong>
+			<a href="https://github.com/ibillingsley/BeatSaber-Overlay" target="_blank">Source code</a>
+		</dialog>
+		<script src="index.js"></script>
+	</body>
 </html>
