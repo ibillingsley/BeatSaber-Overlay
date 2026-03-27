@@ -86,7 +86,7 @@ let duration = 0;
 async function updateMapInfo(data) {
 	const custom = data.level_id.startsWith("custom_level_");
 	const wip = custom && data.level_id.endsWith("WIP");
-	cover.src = data.coverRaw ? `data:image/png;base64,${data.coverRaw}` : "images/unknown.svg";
+	cover.src = data.coverRaw ? `data:image/jpeg;base64,${data.coverRaw}` : "images/unknown.svg";
 	title.textContent = data.name || "";
 	subTitle.textContent = data.sub_name || "";
 	artist.textContent = data.artist || "";
