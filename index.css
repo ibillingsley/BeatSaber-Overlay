@@ -92,23 +92,20 @@ span:empty {
 	font-weight: 700;
 }
 
-#mapper::before,
-#difficultyLabel::before {
-	content: "‹";
-}
-
-#mapper::after,
-#difficultyLabel::after {
-	content: "›";
-}
-
-#difficultyLabel,
-#subTitle {
+#subTitle,
+#difficultyLabel {
 	flex-shrink: 99999;
 }
 
-#difficulty,
-#difficultyLabel {
+#mapper::before {
+	content: "‹";
+}
+
+#mapper::after {
+	content: "›";
+}
+
+#difficulty {
 	font-size: 1.5rem;
 }
 
@@ -117,6 +114,10 @@ span:empty {
 	height: 1.7rem;
 	flex-shrink: 0;
 	align-self: center;
+}
+
+#difficultyLabel {
+	font-size: 1.4rem;
 }
 
 #type,
