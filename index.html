@@ -36,6 +36,15 @@
 				<span id="mistakes">7</span>
 			</div>
 		</div>
+		<svg width="0" height="0" style="position: absolute">
+			<filter id="gamma" color-interpolation-filters="sRGB">
+				<feComponentTransfer>
+					<feFuncR type="gamma" exponent="0.47"></feFuncR>
+					<feFuncG type="gamma" exponent="0.47"></feFuncG>
+					<feFuncB type="gamma" exponent="0.47"></feFuncB>
+				</feComponentTransfer>
+			</filter>
+		</svg>
 		<dialog id="settings">
 			<strong>Settings</strong>
 			<label>Show cover: <input id="coverInput" type="checkbox"></label>

@@ -67,6 +67,7 @@ span:empty {
 	margin-bottom: 0.2rem;
 	border-radius: 0.6rem;
 	flex-shrink: 0;
+	filter: url(#gamma);
 }
 
 #mapInfo {
